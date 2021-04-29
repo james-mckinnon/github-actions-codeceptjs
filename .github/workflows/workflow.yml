@@ -11,7 +11,6 @@ jobs:
     name: Run Ubuntu
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-
-      - name: Run Codecept
-        run: npm run codeceptjs
+      - uses: microsoft/playwright-github-action@v1
+      - name: run CodeceptJS tests
+        run: npx codeceptjs run
