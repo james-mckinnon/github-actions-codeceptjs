@@ -1,7 +1,10 @@
-name: Codecept
+name: Node.js CI
+
 on: [push, pull_request]
+
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -9,12 +12,13 @@ jobs:
         node-version: [13.x]
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matric.node-version }}
-      - run: npm install && npx codeceptjs run --steps
-        env:
-          CI: true
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |
+          npm install
+          npx codeceptjs run --steps
+      env:
+        CI: true
