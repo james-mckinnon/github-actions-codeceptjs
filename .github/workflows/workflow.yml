@@ -1,19 +1,20 @@
 name: Codecept
-on:
-  push:
-    branches:
-      - master
+on: [push, pull_request]
 jobs:
-  Ubuntu:
-    strategy:
-      fail-fast: false
-    timeout-minutes: 10
-    name: Run Ubuntu
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: microsoft/playwright-github-action@v1
 
-      - uses: ./
-      
-      - name: run CodeceptJS tests
-        run: npm install && npm run codeceptjs:headless
+    strategy:
+      matrix:
+        node-version: [13.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matric.node-version }}
+      - run: npm install && npx codeceptjs run --steps
+        env:
+          CI: true
