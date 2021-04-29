@@ -1,0 +1,17 @@
+name: Codecept
+on:
+  push:
+    branches:
+      - master
+jobs:
+  Ubuntu:
+    strategy:
+      fail-fast: false
+    timeout-minutes: 10
+    name: Run Ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Run Codecept
+        run: npm run codeceptjs
